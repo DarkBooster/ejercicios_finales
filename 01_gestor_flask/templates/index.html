@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio · Gestor Flask{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <h2>Tareas</h2>
+
+    <form method="post" action="{{ url_for('main.agregar') }}" class="row">
+      <input
+        type="text"
+        name="texto"
+        placeholder="Nueva tarea…"
+        autocomplete="off"
+        required
+      />
+      <button type="submit">Agregar</button>
+    </form>
+
+    {% if tareas %}
+      <ul class="list">
+        {% for t in tareas %}
+          <li class="item">
+            <span class="{% if t.hecho %}done{% endif %}">
+              {{ t.texto }}
+            </span>
+            <div class="actions">
+              <a class="btn-link" href="{{ url_for('main.editar_form', tarea_id=t.id) }}">Editar</a>
+              {% if not t.hecho %}
+                <form method="post" action="{{ url_for('main.completar', tarea_id=t.id) }}">
+                  <button type="submit">Completar</button>
+                </form>
+              {% else %}
+                <span class="badge">Hecha</span>
+              {% endif %}
+              <form method="post" action="{{ url_for('main.eliminar', tarea_id=t.id) }}">
+                <button type="submit">Eliminar</button>
+              </form>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No hay tareas todavía.</p>
+    {% endif %}
+  </section>
+{% endblock %}
+

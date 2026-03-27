@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Editar · Gestor Flask{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <h2>Editar tarea #{{ tarea.id }}</h2>
+
+    <form method="post" action="{{ url_for('main.editar_guardar', tarea_id=tarea.id) }}" class="row">
+      <input type="text" name="texto" value="{{ tarea.texto }}" required />
+      <button type="submit">Guardar</button>
+      <a class="btn-link" href="{{ url_for('main.index') }}">Cancelar</a>
+    </form>
+  </section>
+{% endblock %}
+
